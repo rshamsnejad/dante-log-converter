@@ -1,0 +1,1 @@
+copy /b *.log OUTPUT.log
