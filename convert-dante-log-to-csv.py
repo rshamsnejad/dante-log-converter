@@ -16,7 +16,7 @@ try:
     csv_file = open(csv_filename, 'w', newline='')
 
     csv_writer = csv.writer(csv_file)
-    csv_writer.writerow(["Date", "Timezone", "Timestamp", "Log Level", "Device", "Message"])
+    csv_writer.writerow(["Date", "Time", "Timezone", "Timestamp", "Log Level", "Device", "Message"])
 
     for line in log_file:
 
@@ -27,7 +27,8 @@ try:
         row_split = re.split(r'\s', line.strip(), maxsplit=6)
         
         row = [
-            f"{row_split[0]} {row_split[1]}",
+            row_split[0],
+            row_split[1],
             row_split[2],
             row_split[3],
             row_split[4],
@@ -36,10 +37,10 @@ try:
         ]
 
         # In case the device field is empty, fill it with the MAC address from the message
-        if not row[4]:
-            message_split = re.split(r'(device name not known)',row[5])[0].strip()
+        if not row[5]:
+            message_split = re.split(r'(device name not known)',row[6])[0].strip()
 
-            row[4] = message_split.split(' ')[1]
+            row[5] = message_split.split(' ')[1]
 
         csv_writer.writerow(row)
 
