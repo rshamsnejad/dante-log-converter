@@ -18,10 +18,11 @@ try:
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(["Date", "Timestamp", "Log Level", "Device", "Message"])
 
-    # First line is useless, skip it
-    next(log_file)
-
     for line in log_file:
+
+        # Skip the useless first line
+        if line.startswith("Dante Controller Event Log"):
+            continue
 
         row_split = re.split(r'\s', line.strip(), maxsplit=6)
         
